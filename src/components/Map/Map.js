@@ -24,6 +24,9 @@ const Map = props => {
       pixelRatio: window.devicePixelRatio || 1
     });
 
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
+
+    const ui = H.ui.UI.createDefault(hMap, defaultLayers);
     // Cleanup to avoid memory leaks
     return () => {
       hMap.dispose();
