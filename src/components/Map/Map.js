@@ -1,6 +1,9 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 const Map = props => {
+  const [displayPolygon, togglePolygonHandler] = useState(true);
+  let H;
+
   const mapRef = useRef(null);
 
   const mapStyle = {
@@ -9,10 +12,27 @@ const Map = props => {
     height: '100vh'
   };
 
+  const addPolygon = (map) => {
+    const lineString = new H.geo.LineString(
+      [52, 13, 100, 48, 2, 100, 48, 16, 100, 52, 16, 100],
+    );
+
+    // Add polygon to map
+    map.addObject(
+      new H.map.Polygon(lineString, {
+        style: {
+          fillColor: '#b3ffff',
+          strokeColor: '#bbb',
+          lineWidth: 4
+        }
+      })
+    );
+  };
+
   useLayoutEffect(() => {
     if (!mapRef.current) return;
 
-    const H = window.H;
+    H = window.H;
     const platform = new H.service.Platform({
       apikey: 'B5nrcCmj3Oa1kwgLB1SHUEqg_6HuSx5BTv51MjDoQJM'
     });
@@ -27,6 +47,11 @@ const Map = props => {
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
 
     const ui = H.ui.UI.createDefault(hMap, defaultLayers);
+
+    if (displayPolygon) {
+      addPolygon(hMap);
+    }
+
     // Cleanup to avoid memory leaks
     return () => {
       hMap.dispose();
