@@ -4,6 +4,7 @@ const Map = props => {
   const currentMapRef = useRef(null);
   const HRef = useRef(null);
   const map = useRef(null);
+  const polygonRef = useRef(null);
 
   const mapStyle = {
     position: 'fixed',
@@ -18,17 +19,23 @@ const Map = props => {
       [52, 13, 100, 48, 2, 100, 48, 16, 100, 52, 16, 100],
     );
 
-    // Add polygon to map
-    hMap.addObject(
-      new H.map.Polygon(lineString, {
-        style: {
-          fillColor: '#b3ffff',
-          strokeColor: '#bbb',
-          lineWidth: 4
-        }
-      })
-    );
+    const polygon = new H.map.Polygon(lineString, {
+      style: {
+        fillColor: '#b3ffff',
+        strokeColor: '#bbb',
+        lineWidth: 4
+      }
+    });
+
+    // Add polygon to map, assign it to ref
+    hMap.addObject(polygon);
+    polygonRef.current = polygon;
   };
+
+  const removePolygon = () => {
+    const hMap = map.current;
+    hMap.removeObject(polygonRef.current);
+  }
 
   // re-renders map if currentMapRef changes
   useEffect(() => {
@@ -66,6 +73,8 @@ const Map = props => {
     console.log('[Updating polygon] => ', props.showPolygon);
     if (props.showPolygon) {
       addPolygon()
+    } else {
+      removePolygon();
     }
   }, [props.showPolygon]);
 
