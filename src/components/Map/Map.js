@@ -6,12 +6,6 @@ const Map = props => {
   const map = useRef(null);
   const polygonRef = useRef(null);
 
-  const mapStyle = {
-    position: 'fixed',
-    width: '100%',
-    height: '100vh'
-  };
-
   const addPolygon = () => {
     const H = HRef.current;
     const hMap = map.current;
@@ -64,14 +58,12 @@ const Map = props => {
 
     // Cleanup to avoid memory leaks
     return () => {
-      console.log('[Map] unmounting');
       hMap.dispose();
     };
   }, [currentMapRef]);
 
   // Hook to toggle polygon without re-rendering entire map
   useLayoutEffect(() => {
-    console.log('[Updating polygon] => ', props.showPolygon);
     if (props.showPolygon) {
       addPolygon()
     } else {
@@ -80,7 +72,13 @@ const Map = props => {
   }, [props.showPolygon]);
 
   return (
-    <div className="map" ref={currentMapRef} style={mapStyle} />
+    <div
+      ref={currentMapRef}
+      style={{
+          position: 'fixed',
+          width: '100%',
+          height: '100vh'
+      }}/>
   );
 };
 
