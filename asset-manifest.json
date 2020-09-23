@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/polygon-map/static/css/main.8af30252.chunk.css",
+    "main.js": "/polygon-map/static/js/main.331489e4.chunk.js",
+    "main.js.map": "/polygon-map/static/js/main.331489e4.chunk.js.map",
+    "runtime-main.js": "/polygon-map/static/js/runtime-main.b5bb43aa.js",
+    "runtime-main.js.map": "/polygon-map/static/js/runtime-main.b5bb43aa.js.map",
+    "static/js/2.79422d77.chunk.js": "/polygon-map/static/js/2.79422d77.chunk.js",
+    "static/js/2.79422d77.chunk.js.map": "/polygon-map/static/js/2.79422d77.chunk.js.map",
+    "index.html": "/polygon-map/index.html",
+    "precache-manifest.158fe5cba49f6854026589c609573f0c.js": "/polygon-map/precache-manifest.158fe5cba49f6854026589c609573f0c.js",
+    "service-worker.js": "/polygon-map/service-worker.js",
+    "static/css/main.8af30252.chunk.css.map": "/polygon-map/static/css/main.8af30252.chunk.css.map",
+    "static/js/2.79422d77.chunk.js.LICENSE.txt": "/polygon-map/static/js/2.79422d77.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b5bb43aa.js",
+    "static/js/2.79422d77.chunk.js",
+    "static/css/main.8af30252.chunk.css",
+    "static/js/main.331489e4.chunk.js"
+  ]
+}
