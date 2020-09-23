@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 const Map = props => {
   const currentMapRef = useRef(null);
@@ -38,9 +38,10 @@ const Map = props => {
   }
 
   // re-renders map if currentMapRef changes
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!currentMapRef.current) return;
 
+    console.log('Rendering map');
     HRef.current = window.H;
     console.log(HRef.current);
     const H = HRef.current;
@@ -69,7 +70,7 @@ const Map = props => {
   }, [currentMapRef]);
 
   // Hook to toggle polygon without re-rendering entire map
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log('[Updating polygon] => ', props.showPolygon);
     if (props.showPolygon) {
       addPolygon()

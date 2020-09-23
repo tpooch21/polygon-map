@@ -14,7 +14,8 @@ function App() {
         <Map showPolygon={displayPolygon}/>
         <Sidebar
           togglePolygon={() => togglePolygonHandler(!displayPolygon)}
-          toggleSidebar={() => toggleSidebarHandler(!showSidebar)}/>
+          toggleSidebar={() => toggleSidebarHandler(!showSidebar)}
+          background="gray.300"/>
       </main>
     </div>
   );
