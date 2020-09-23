@@ -1,10 +1,9 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Map = props => {
-  const [displayPolygon, togglePolygonHandler] = useState(true);
-  let H;
-
-  const mapRef = useRef(null);
+  const currentMapRef = useRef(null);
+  const HRef = useRef(null);
+  const map = useRef(null);
 
   const mapStyle = {
     position: 'fixed',
@@ -12,13 +11,15 @@ const Map = props => {
     height: '100vh'
   };
 
-  const addPolygon = (map) => {
+  const addPolygon = () => {
+    const H = HRef.current;
+    const hMap = map.current;
     const lineString = new H.geo.LineString(
       [52, 13, 100, 48, 2, 100, 48, 16, 100, 52, 16, 100],
     );
 
     // Add polygon to map
-    map.addObject(
+    hMap.addObject(
       new H.map.Polygon(lineString, {
         style: {
           fillColor: '#b3ffff',
@@ -29,37 +30,47 @@ const Map = props => {
     );
   };
 
-  useLayoutEffect(() => {
-    if (!mapRef.current) return;
+  // re-renders map if currentMapRef changes
+  useEffect(() => {
+    if (!currentMapRef.current) return;
 
-    H = window.H;
+    HRef.current = window.H;
+    console.log(HRef.current);
+    const H = HRef.current;
+
     const platform = new H.service.Platform({
       apikey: 'B5nrcCmj3Oa1kwgLB1SHUEqg_6HuSx5BTv51MjDoQJM'
     });
     const defaultLayers = platform.createDefaultLayers();
 
-    const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
+    map.current = new H.Map(currentMapRef.current, defaultLayers.vector.normal.map, {
       center: { lat: 50, lng: 5 },
       zoom: 4,
       pixelRatio: window.devicePixelRatio || 1
     });
+    const hMap = map.current;
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
 
     const ui = H.ui.UI.createDefault(hMap, defaultLayers);
 
-    if (displayPolygon) {
-      addPolygon(hMap);
-    }
-
     // Cleanup to avoid memory leaks
     return () => {
+      console.log('[Map] unmounting');
       hMap.dispose();
     };
-  }, [mapRef]);
+  }, [currentMapRef]);
+
+  // Hook to toggle polygon without re-rendering entire map
+  useEffect(() => {
+    console.log('[Updating polygon] => ', props.showPolygon);
+    if (props.showPolygon) {
+      addPolygon()
+    }
+  }, [props.showPolygon]);
 
   return (
-    <div className="map" ref={mapRef} style={mapStyle} />
+    <div className="map" ref={currentMapRef} style={mapStyle} />
   );
 };
 
